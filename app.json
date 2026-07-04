@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Sikka",
+    "slug": "sikka",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0E14",
+    "splash": {
+      "backgroundColor": "#0B0E14",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sikka.app"
+    },
+    "android": {
+      "package": "com.sikka.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0E14",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
