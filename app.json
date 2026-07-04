@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Sikka",
-    "slug": "sikka",
+    "slug": "avinash-singh",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,6 +27,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eeba8909-52ad-4324-a812-0318b449e053"
+      }
+    },
+    "owner": "avishsss-team"
   }
 }

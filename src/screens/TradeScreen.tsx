@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -104,63 +104,69 @@ export default function TradeScreen({ navigation, route }: Props) {
         <View style={{ width: 38 }} />
       </View>
 
-      <Text style={styles.livePrice}>
-        1 {coin.symbol} = {formatINR(quote.priceInr)}
-      </Text>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        <Text style={styles.livePrice}>
+          1 {coin.symbol} = {formatINR(quote.priceInr)}
+        </Text>
 
-      <View style={styles.amountBlock}>
-        <Animated.View style={[styles.amountRow, shakeStyle]}>
-          <Text style={[styles.rupee, { color: raw ? colors.text : colors.textFaint }]}>₹</Text>
-          <Text style={[styles.amount, { color: raw ? colors.text : colors.textFaint }]}>
-            {raw || '0'}
+        <View style={styles.amountBlock}>
+          <Animated.View style={[styles.amountRow, shakeStyle]}>
+            <Text style={[styles.rupee, { color: raw ? colors.text : colors.textFaint }]}>₹</Text>
+            <Text style={[styles.amount, { color: raw ? colors.text : colors.textFaint }]}>
+              {raw || '0'}
+            </Text>
+          </Animated.View>
+          <Text style={styles.estQty}>
+            {value > 0
+              ? `≈ ${formatQty(estQty, coin.symbol)}${isBuy ? '' : ' to sell'}`
+              : isBuy
+                ? `Balance: ${formatINR(inrBalance, { decimals: 0 })}`
+                : `You hold: ${formatINR(holdingValueInr, { decimals: 0 })}`}
           </Text>
-        </Animated.View>
-        <Text style={styles.estQty}>
-          {value > 0
-            ? `≈ ${formatQty(estQty, coin.symbol)}${isBuy ? '' : ' to sell'}`
-            : isBuy
-              ? `Balance: ${formatINR(inrBalance, { decimals: 0 })}`
-              : `You hold: ${formatINR(holdingValueInr, { decimals: 0 })}`}
-        </Text>
-        {!!error && <Text style={styles.error}>{error}</Text>}
-      </View>
+          {!!error && <Text style={styles.error}>{error}</Text>}
+        </View>
 
-      <View style={styles.chips}>
-        {QUICK_AMOUNTS.map((a) => (
-          <PressableScale key={a} onPress={() => setRaw(String(a))} style={styles.chip}>
-            <Text style={styles.chipText}>₹{a >= 1000 ? `${a / 1000}k` : a}</Text>
+        <View style={styles.chips}>
+          {QUICK_AMOUNTS.map((a) => (
+            <PressableScale key={a} onPress={() => setRaw(String(a))} style={styles.chip}>
+              <Text style={styles.chipText}>₹{a >= 1000 ? `${a / 1000}k` : a}</Text>
+            </PressableScale>
+          ))}
+          <PressableScale
+            onPress={() => setRaw(maxInr > 0 ? String(Math.floor(maxInr * 100) / 100) : '')}
+            style={[styles.chip, { borderColor: accent }]}
+          >
+            <Text style={[styles.chipText, { color: accent }]}>Max</Text>
           </PressableScale>
-        ))}
-        <PressableScale
-          onPress={() => setRaw(maxInr > 0 ? String(Math.floor(maxInr * 100) / 100) : '')}
-          style={[styles.chip, { borderColor: accent }]}
-        >
-          <Text style={[styles.chipText, { color: accent }]}>Max</Text>
-        </PressableScale>
-      </View>
+        </View>
 
-      {value >= MIN_ORDER_INR && (
-        <Text style={styles.feeNote}>
-          Includes {formatINR(fee)} fee ({(FEE_RATE * 100).toFixed(1)}%) · No gas fees, ever
-        </Text>
-      )}
+        {value >= MIN_ORDER_INR && (
+          <Text style={styles.feeNote}>
+            Includes {formatINR(fee)} fee ({(FEE_RATE * 100).toFixed(1)}%) · No gas fees, ever
+          </Text>
+        )}
 
-      <View style={{ flex: 1 }} />
-      <Keypad onKey={(k) => { setError(''); onKey(k); }} />
+        <View style={{ flex: 1 }} />
+        <Keypad onKey={(k) => { setError(''); onKey(k); }} />
 
-      <View style={styles.footer}>
-        <Button
-          title={
-            value > 0
-              ? `${isBuy ? 'Buy' : 'Sell'} for ${formatINR(value, { decimals: 0 })}`
-              : `Enter amount to ${side}`
-          }
-          variant={isBuy ? 'primary' : 'danger'}
-          disabled={value <= 0}
-          loading={placing}
-          onPress={confirm}
-        />
-      </View>
+        <View style={styles.footer}>
+          <Button
+            title={
+              value > 0
+                ? `${isBuy ? 'Buy' : 'Sell'} for ${formatINR(value, { decimals: 0 })}`
+                : `Enter amount to ${side}`
+            }
+            variant={isBuy ? 'primary' : 'danger'}
+            disabled={value <= 0}
+            loading={placing}
+            onPress={confirm}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

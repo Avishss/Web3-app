@@ -44,7 +44,11 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 40 }}
+      >
         <Text style={styles.title}>Profile</Text>
 
         <View style={styles.userCard}>

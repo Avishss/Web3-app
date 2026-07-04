@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../components/Button';
@@ -46,7 +46,11 @@ export default function BankTransferScreen({ navigation, route }: Props) {
         <View style={{ width: 38 }} />
       </View>
 
-      <View style={{ flex: 1, paddingHorizontal: spacing.screen }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: spacing.screen }}
+      >
         <Animated.View entering={FadeInDown.duration(400)} style={styles.amountCard}>
           <Text style={styles.amountLabel}>Transfer exactly</Text>
           <Text style={styles.amount}>{formatINR(amount, { decimals: 0 })}</Text>
@@ -69,15 +73,16 @@ export default function BankTransferScreen({ navigation, route }: Props) {
             nothing else to do.
           </Text>
         </Animated.View>
-      </View>
 
-      <View style={styles.footer}>
-        <Button
-          title="I've made the transfer"
-          loading={confirming}
-          onPress={confirm}
-        />
-      </View>
+        <View style={{ flex: 1 }} />
+        <View style={styles.footer}>
+          <Button
+            title="I've made the transfer"
+            loading={confirming}
+            onPress={confirm}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

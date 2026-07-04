@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -66,46 +66,52 @@ export default function WithdrawScreen({ navigation }: Props) {
         <View style={{ width: 38 }} />
       </View>
 
-      <View style={styles.amountBlock}>
-        <Animated.View style={[styles.amountRow, shakeStyle]}>
-          <Text style={[styles.rupee, { color: raw ? colors.text : colors.textFaint }]}>₹</Text>
-          <Text style={[styles.amount, { color: raw ? colors.text : colors.textFaint }]}>
-            {raw || '0'}
-          </Text>
-        </Animated.View>
-        <Text style={styles.balance}>Available: {formatINR(inrBalance, { decimals: 2 })}</Text>
-        {!!error && <Text style={styles.error}>{error}</Text>}
-      </View>
-
-      <View style={styles.chips}>
-        <PressableScale
-          onPress={() => { setError(''); setRaw(inrBalance > 0 ? String(Math.floor(inrBalance * 100) / 100) : ''); }}
-          style={styles.chip}
-        >
-          <Text style={styles.chipText}>Withdraw all</Text>
-        </PressableScale>
-      </View>
-
-      <View style={styles.bankRow}>
-        <View style={styles.bankIcon}>
-          <Ionicons name="business" size={18} color={colors.accent} />
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        <View style={styles.amountBlock}>
+          <Animated.View style={[styles.amountRow, shakeStyle]}>
+            <Text style={[styles.rupee, { color: raw ? colors.text : colors.textFaint }]}>₹</Text>
+            <Text style={[styles.amount, { color: raw ? colors.text : colors.textFaint }]}>
+              {raw || '0'}
+            </Text>
+          </Animated.View>
+          <Text style={styles.balance}>Available: {formatINR(inrBalance, { decimals: 2 })}</Text>
+          {!!error && <Text style={styles.error}>{error}</Text>}
         </View>
-        <View>
-          <Text style={styles.bankName}>HDFC Bank ····4821</Text>
-          <Text style={styles.bankSub}>IMPS · usually under 10 minutes · free</Text>
-        </View>
-      </View>
 
-      <View style={{ flex: 1 }} />
-      <Keypad onKey={(k) => { setError(''); onKey(k); }} />
-      <View style={styles.footer}>
-        <Button
-          title={value > 0 ? `Withdraw ${formatINR(value, { decimals: 0 })}` : 'Enter amount'}
-          disabled={value <= 0}
-          loading={placing}
-          onPress={confirm}
-        />
-      </View>
+        <View style={styles.chips}>
+          <PressableScale
+            onPress={() => { setError(''); setRaw(inrBalance > 0 ? String(Math.floor(inrBalance * 100) / 100) : ''); }}
+            style={styles.chip}
+          >
+            <Text style={styles.chipText}>Withdraw all</Text>
+          </PressableScale>
+        </View>
+
+        <View style={styles.bankRow}>
+          <View style={styles.bankIcon}>
+            <Ionicons name="business" size={18} color={colors.accent} />
+          </View>
+          <View>
+            <Text style={styles.bankName}>HDFC Bank ····4821</Text>
+            <Text style={styles.bankSub}>IMPS · usually under 10 minutes · free</Text>
+          </View>
+        </View>
+
+        <View style={{ flex: 1 }} />
+        <Keypad onKey={(k) => { setError(''); onKey(k); }} />
+        <View style={styles.footer}>
+          <Button
+            title={value > 0 ? `Withdraw ${formatINR(value, { decimals: 0 })}` : 'Enter amount'}
+            disabled={value <= 0}
+            loading={placing}
+            onPress={confirm}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

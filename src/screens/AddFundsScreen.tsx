@@ -60,7 +60,11 @@ export default function AddFundsScreen({ navigation }: Props) {
         <View style={{ width: 38 }} />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={styles.amountBlock}>
           <Animated.View style={[styles.amountRow, shakeStyle]}>
             <Text style={[styles.rupee, { color: raw ? colors.text : colors.textFaint }]}>₹</Text>

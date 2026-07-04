@@ -12,22 +12,23 @@ export default function Keypad({ onKey }: { onKey: (key: string) => void }) {
   return (
     <View style={styles.grid}>
       {KEYS.map((k) => (
-        <PressableScale
-          key={k}
-          haptic={false}
-          scaleTo={0.9}
-          style={styles.key}
-          onPress={() => {
-            Haptics.selectionAsync().catch(() => {});
-            onKey(k);
-          }}
-        >
-          {k === '<' ? (
-            <Ionicons name="backspace-outline" size={24} color={colors.text} />
-          ) : (
-            <Text style={styles.label}>{k}</Text>
-          )}
-        </PressableScale>
+        <View key={k} style={styles.keyWrap}>
+          <PressableScale
+            haptic={false}
+            scaleTo={0.9}
+            style={styles.key}
+            onPress={() => {
+              Haptics.selectionAsync().catch(() => {});
+              onKey(k);
+            }}
+          >
+            {k === '<' ? (
+              <Ionicons name="backspace-outline" size={24} color={colors.text} />
+            ) : (
+              <Text style={styles.label}>{k}</Text>
+            )}
+          </PressableScale>
+        </View>
       ))}
     </View>
   );
@@ -35,9 +36,9 @@ export default function Keypad({ onKey }: { onKey: (key: string) => void }) {
 
 const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
+  keyWrap: { width: '33.33%', height: 62 },
   key: {
-    width: '33.33%',
-    height: 62,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -77,7 +77,11 @@ export default function CoinDetailScreen({ navigation, route }: Props) {
         </PressableScale>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 16 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 16 }}
+      >
         <View style={styles.priceBlock}>
           <AnimatedNumber
             value={shownPrice}

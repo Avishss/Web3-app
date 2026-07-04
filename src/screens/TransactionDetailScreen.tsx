@@ -50,7 +50,11 @@ export default function TransactionDetailScreen({ navigation, route }: Props) {
         <View style={{ width: 38 }} />
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 24 }} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 24 }}
+        showsVerticalScrollIndicator={false}
+      >
         <Animated.View entering={FadeInDown.duration(400)} style={styles.hero}>
           <View
             style={[

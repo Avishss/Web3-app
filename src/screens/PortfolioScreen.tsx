@@ -35,7 +35,11 @@ export default function PortfolioScreen() {
 
   return (
     <SafeAreaView style={styles.root} edges={['top']}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 32 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
         <Text style={styles.title}>Portfolio</Text>
 
         <Animated.View entering={FadeInDown.duration(450)} style={styles.summary}>
