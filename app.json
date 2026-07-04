@@ -23,7 +23,9 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "resize"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +35,9 @@
         "projectId": "eeba8909-52ad-4324-a812-0318b449e053"
       }
     },
-    "owner": "avishsss-team"
+    "owner": "avishsss-team",
+    "plugins": [
+      "react-native-edge-to-edge"
+    ]
   }
 }

@@ -1,9 +1,10 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../../components/Button';
+import { useKeyboardBehavior } from '../../hooks/useKeyboardBehavior';
 import { OnboardingStackParamList } from '../../navigation/types';
 import { colors, radius, spacing, type } from '../../theme';
 
@@ -12,13 +13,11 @@ type Props = NativeStackScreenProps<OnboardingStackParamList, 'Phone'>;
 export default function PhoneScreen({ navigation }: Props) {
   const [phone, setPhone] = useState('');
   const valid = /^[6-9]\d{9}$/.test(phone);
+  const keyboardBehavior = useKeyboardBehavior();
 
   return (
     <SafeAreaView style={styles.root}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={keyboardBehavior}>
         <View style={styles.body}>
           <Animated.Text entering={FadeInDown.duration(400)} style={styles.title}>
             What's your mobile number?

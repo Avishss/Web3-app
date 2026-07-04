@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -14,6 +13,7 @@ import {
 import Animated, { FadeInDown, ZoomIn } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../../components/Button';
+import { useKeyboardBehavior } from '../../hooks/useKeyboardBehavior';
 import { OnboardingStackParamList } from '../../navigation/types';
 import { useStore } from '../../store/useStore';
 import { colors, radius, spacing, type } from '../../theme';
@@ -26,6 +26,7 @@ export default function KycScreen({ route }: Props) {
   const [name, setName] = useState('');
   const [pan, setPan] = useState('');
   const [state, setState] = useState<'form' | 'verifying' | 'done'>('form');
+  const keyboardBehavior = useKeyboardBehavior();
 
   const panValid = /^[A-Z]{5}\d{4}[A-Z]$/.test(pan);
   const canSubmit = name.trim().length >= 3 && panValid;
@@ -64,10 +65,7 @@ export default function KycScreen({ route }: Props) {
 
   return (
     <SafeAreaView style={styles.root}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={keyboardBehavior}>
         <View style={styles.body}>
           <Animated.Text entering={FadeInDown.duration(400)} style={styles.title}>
             Quick KYC — 30 seconds
